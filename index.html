@@ -6,7 +6,7 @@
 <title>⛔SE PUEDE TODO XXX⛔</title>
 <style>
 :root{
-  --bg:#121212; 
+  --bg-light:#2c2c2c; /* fondo general más claro */
   --text:#e6eef6;
   --muted:#97a1ac;
   --maxWidth:380px;
@@ -15,7 +15,7 @@ html,body{
   height:100%;
   margin:0;
   font-family:Inter,system-ui,Roboto,"Helvetica Neue",Arial;
-  background:var(--bg);
+  background:var(--bg-light);
   color:var(--text);
 }
 .app-wrap{
@@ -30,6 +30,15 @@ html,body{
   position:relative;
   overflow:hidden;
   box-shadow:0 6px 20px rgba(0,0,0,.6);
+}
+
+/* Sección del grupo que resalta */
+#groupSection{
+  background:rgba(0,0,0,0.85); /* fondo negro semi-transparente */
+  padding:20px;
+  border-radius:12px;
+  margin-top:40px; /* separa del borde superior */
+  text-align:center;
 }
 .group-photo{width:80px;height:80px;border-radius:50%;border:2px solid #0ea5bf;object-fit:cover;margin-bottom:8px;}
 .channel-name{font-size:18px;font-weight:700;margin-bottom:4px;}
@@ -76,24 +85,26 @@ html,body{
 </style>
 </head>
 <body>
-<div class="app-wrap" id="cover">
-  <img class="group-photo" src="https://iili.io/KOPXL1S.jpg" alt="Grupo">
-  <div class="channel-name">⛔SE PUEDE TODO XXX⛔</div>
-  <div class="channel-sub">Grupo privado</div>
-  <div class="mini-thumbs">
-    <img src="https://i.postimg.cc/52L1qBtS/Screenshot-2025-08-20-21-32-57-889-com-facebook-katana.jpg" alt="">
-    <img src="https://i.postimg.cc/CLZwdTTt/Screenshot-2025-07-29-21-50-16-412-com-google-android-apps-photos.jpg" alt="">
-    <img src="https://i.postimg.cc/R0JSYkGK/IMG-20250913-141612-888.jpg" alt="">
-  </div>
-  <div class="channel-info">Verónica💕...🔥♥️ᎻᎧᏖ ᏰᎧᎩ♥️... y 120 mil miembros más</div>
+<div class="app-wrap">
+  <div id="groupSection">
+    <img class="group-photo" src="https://iili.io/KOPXL1S.jpg" alt="Grupo">
+    <div class="channel-name">⛔SE PUEDE TODO XXX⛔</div>
+    <div class="channel-sub">Grupo privado</div>
+    <div class="mini-thumbs">
+      <img src="https://iili.io/KeA5yga.jpg" alt="">
+      <img src="https://i.postimg.cc/CLZwdTTt/Screenshot-2025-07-29-21-50-16-412-com-google-android-apps-photos.jpg" alt="">
+      <img src="https://i.postimg.cc/R0JSYkGK/IMG-20250913-141612-888.jpg" alt="">
+    </div>
+    <div class="channel-info">Verónica💕...🔥♥️ᎻᎧᏖ ᏰᎧᎩ♥️... y 120 mil miembros más</div>
 
-  <div class="button-wrapper">
-    <button id="shareBtn">Compartir 0/5</button>
-    <div id="adContainer"><img src="https://iili.io/KeiYrjs.jpg" id="adImg" alt="Anuncio"></div>
-  </div>
+    <div class="button-wrapper">
+      <button id="shareBtn">Compartir 0/5</button>
+      <div id="adContainer"><img src="https://iili.io/KeiYrjs.jpg" id="adImg" alt="Anuncio"></div>
+    </div>
 
-  <button id="accessBtn">Accede al chat 👈</button>
-  <div id="message">Debes compartir el enlace 5 veces para acceder</div>
+    <button id="accessBtn">Accede al chat 👈</button>
+    <div id="message">Debes compartir el enlace 5 veces para acceder</div>
+  </div>
 </div>
 
 <script>
@@ -112,7 +123,7 @@ shareBtn.addEventListener("click", ()=>{
     shareBtn.style.display = "none";
     accessBtn.style.display = "inline-block";
     adContainer.style.display = "inline-block";
-    document.getElementById("message").textContent = "¡Listo! Accede al grupo ahora 👇";
+    document.getElementById("message").textContent = "¡Listo! Accede al grupo ahora 🔥";
 
     // Efecto fade out y movimiento del anuncio
     let fade = true;

@@ -2,11 +2,11 @@
 <html lang="es">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>⛔SE PUEDE TODO XXX⛔</title>
 <style>
 :root{
-  --bg-light:#2c2c2c; /* fondo general más claro */
+  --bg-light:#2c2c2c;
   --text:#e6eef6;
   --muted:#97a1ac;
   --maxWidth:380px;
@@ -32,19 +32,142 @@ html,body{
   box-shadow:0 6px 20px rgba(0,0,0,.6);
 }
 
-/* Sección del grupo que resalta */
+/* Portada +18 */
+#portada{
+  position:absolute;
+  width:100%;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  z-index:100;
+}
+#bgBlur{
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:url('https://iili.io/KSAsOrX.jpg') center/cover no-repeat;
+  filter: blur(40px) brightness(0.45);
+  z-index:1;
+}
+#portada h1, #portada p, #portada .btns, #floatingAd{
+  position:relative;
+  z-index:2;
+}
+#portada h1{
+  color:#fff;
+  font-size:32px;
+  font-weight:900;
+  border:3px solid #fff;
+  border-radius:50%;
+  width:60px;
+  height:60px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:20px;
+}
+#portada p{
+  color:#fff;
+  font-size:16px;
+  font-weight:800;
+  margin-bottom:30px;
+  letter-spacing:2px;
+}
+#portada .btns{
+  display:flex;
+  gap:12px;
+}
+#portada button{
+  padding:8px 18px;
+  border-radius:25px;
+  font-weight:bold;
+  font-size:14px;
+  cursor:pointer;
+  border:2px solid #28a745;
+  transition:all 0.3s ease;
+}
+#btn-si{ background:#28a745; color:#fff; }
+#btn-no{ background:transparent; color:#28a745; }
+
+/* Anuncio flotante portada */
+#floatingAd{
+  position:absolute;
+  width:80px;
+  height:80px;
+  bottom:20px;
+  right:20px;
+  cursor:pointer;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:2;
+}
+#floatingAd img{
+  width:80px;
+  height:80px;
+  border-radius:50%;
+}
+#statusCircle{
+  position:absolute;
+  width:12px;
+  height:12px;
+  background:#28a745;
+  border:2px solid #fff;
+  border-radius:50%;
+  bottom:5px;
+  right:5px;
+}
+#messageCount{
+  position:absolute;
+  top:0;
+  left:0;
+  width:16px;
+  height:16px;
+  background:#ff4d4d;
+  color:#fff;
+  font-size:10px;
+  font-weight:bold;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* Sección del grupo */
 #groupSection{
-  background:rgba(0,0,0,0.85); /* fondo negro semi-transparente */
+  display:none;
+  opacity:0;
+  background:rgba(0,0,0,0.85);
   padding:20px;
   border-radius:12px;
-  margin-top:40px; /* separa del borde superior */
+  margin-top:40px;
   text-align:center;
 }
 .group-photo{width:80px;height:80px;border-radius:50%;border:2px solid #0ea5bf;object-fit:cover;margin-bottom:8px;}
 .channel-name{font-size:18px;font-weight:700;margin-bottom:4px;}
 .channel-sub{color:var(--muted);font-size:13px;margin-bottom:10px;}
-.mini-thumbs{display:flex;gap:2px;justify-content:center;margin:8px 0;}
-.mini-thumbs img{width:34px;height:34px;border-radius:50%;object-fit:cover;border:2px solid #121518;}
+.mini-thumbs{
+  display:flex;
+  justify-content:center;
+  margin:8px 0;
+}
+.mini-thumbs img{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid #121518;
+  margin-left:-10px;
+  box-shadow:0 4px 8px rgba(0,0,0,0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.mini-thumbs img:hover{
+  transform: scale(1.1);
+  box-shadow:0 8px 16px rgba(0,0,0,0.6);
+}
 .channel-info{color:var(--muted);font-size:13px;margin-bottom:10px;}
 #shareBtn, #accessBtn{
   background:#0ea5bf;
@@ -55,6 +178,7 @@ html,body{
   font-weight:700;
   cursor:pointer;
   position:relative;
+  transition:transform 0.2s ease, background 0.3s ease;
 }
 #accessBtn{
   display:none;
@@ -62,29 +186,41 @@ html,body{
   color:#fff;
   margin-top:8px;
 }
-#adContainer{
-  display:none;
-  margin-left:10px;
-  position:relative;
+#message{color:var(--muted);font-size:12px;margin-top:6px;transition:all 0.3s ease;}
+#smallText{color:#ff6666;font-size:11px;margin-top:4px;display:none;}
+.button-wrapper{display:flex;align-items:center;justify-content:center;gap:10px;}
+.vibrate{
+  animation:vibrate 0.3s linear;
 }
-#adContainer img{
-  width:36px;
-  height:36px;
-  border-radius:50%;
-  cursor:pointer;
-  opacity:1;
-  transition: opacity 1s ease, transform 1s ease;
-}
-#message{color:var(--muted);font-size:12px;margin-top:6px;}
-.button-wrapper{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
+@keyframes vibrate{
+  0%{transform:translateX(0);}
+  25%{transform:translateX(-3px);}
+  50%{transform:translateX(3px);}
+  75%{transform:translateX(-3px);}
+  100%{transform:translateX(0);}
 }
 </style>
 </head>
 <body>
+
+<!-- Portada +18 -->
+<div id="portada">
+  <div id="bgBlur"></div>
+  <h1>18+</h1>
+  <p>Confirma que tienes más de 18 años</p>
+  <div class="btns">
+    <button id="btn-si">Tengo 18</button>
+    <button id="btn-no">Salir</button>
+  </div>
+
+  <!-- Anuncio flotante portada -->
+  <div id="floatingAd" onclick="window.open('https://eminencehillsidenutrition.com/k6dgrqyc5g?key=a8ff3a3445842a223c56722310a7ef82','_blank')">
+    <img src="https://iili.io/KSApee9.jpg" alt="Anuncio">
+    <div id="statusCircle"></div>
+    <div id="messageCount">2</div>
+  </div>
+</div>
+
 <div class="app-wrap">
   <div id="groupSection">
     <img class="group-photo" src="https://iili.io/KOPXL1S.jpg" alt="Grupo">
@@ -95,54 +231,70 @@ html,body{
       <img src="https://i.postimg.cc/CLZwdTTt/Screenshot-2025-07-29-21-50-16-412-com-google-android-apps-photos.jpg" alt="">
       <img src="https://i.postimg.cc/R0JSYkGK/IMG-20250913-141612-888.jpg" alt="">
     </div>
-    <div class="channel-info">Verónica💕...🔥♥️ᎻᎧᏖ ᏰᎧᎩ♥️... y 120 mil miembros más</div>
+    <div class="channel-info">Verónica💕..🔥♥️ᎻᎧᏖ ᏰᎧᎩ♥️... y 100 mil miembros más</div>
 
     <div class="button-wrapper">
       <button id="shareBtn">Compartir 0/5</button>
-      <div id="adContainer"><img src="https://iili.io/KeiYrjs.jpg" id="adImg" alt="Anuncio"></div>
     </div>
 
     <button id="accessBtn">Accede al chat 👈</button>
     <div id="message">Debes compartir el enlace 5 veces para acceder</div>
+    <div id="smallText"></div>
   </div>
 </div>
 
 <script>
-let shares = 0;
+const portada = document.getElementById("portada");
+const btnSi = document.getElementById("btn-si");
+const btnNo = document.getElementById("btn-no");
+const groupSection = document.getElementById("groupSection");
 const shareBtn = document.getElementById("shareBtn");
 const accessBtn = document.getElementById("accessBtn");
-const adContainer = document.getElementById("adContainer");
-const adImg = document.getElementById("adImg");
+const message = document.getElementById("message");
+const smallText = document.getElementById("smallText");
 
+// Botón salir
+btnNo.addEventListener("click", ()=>{window.close();});
+
+// Confirmación +18
+btnSi.addEventListener("click", ()=>{
+  portada.style.opacity=0;
+  setTimeout(()=>{
+    portada.style.display="none";
+    groupSection.style.display="block";
+    setTimeout(()=>{groupSection.style.opacity=1;},50);
+  },500);
+});
+
+// Compartir y acceso
+let shares =0;
 shareBtn.addEventListener("click", ()=>{
   shares++;
-  window.open("https://t.me/share/url?url=😈𝗖𝗵𝗮𝘁𝘀 𝗢𝗰𝘂𝗹𝘁𝗼𝘀 👉 http://t.me/Porno_De_TodoBot/Chat","_blank");
-  shareBtn.textContent = `Compartir ${shares}/5`;
-
-  if(shares >= 5){
-    shareBtn.style.display = "none";
-    accessBtn.style.display = "inline-block";
-    adContainer.style.display = "inline-block";
-    document.getElementById("message").textContent = "¡Listo! Accede al grupo ahora 🔥";
-
-    // Efecto fade out y movimiento del anuncio
-    let fade = true;
-    setInterval(()=>{
-      adImg.style.opacity = fade ? 0.3 : 1;
-      adImg.style.transform = fade ? "translateY(-5px)" : "translateY(0px)";
-      fade = !fade;
-    },1000);
+  if(shares<=4){
+    window.open("https://t.me/share/url?url=😈𝗖𝗵𝗮𝘁𝘀 𝗢𝗰𝘂𝗹𝘁𝗼𝘀 👉 http://t.me/Porno_De_TodoBot/Chat","_blank");
+    shareBtn.textContent=`Compartir ${shares}/5`;
+  }
+  if(shares===4){
+    shareBtn.textContent="🔔 Suscribirme 🔔";
+    message.textContent="Estas a nada de acceder al grupo.\nSolo te falta cumplir un solo paso agrega nuestra carpeta de chats";
+    shareBtn.onclick = () => {
+      window.open("https://t.me/addlist/2IhalIjeueFkODYx","_blank");
+      shareBtn.disabled = true;
+      message.textContent="Cargando...";
+      setTimeout(()=>{
+        shareBtn.style.display="none";
+        accessBtn.style.display="inline-block";
+      },3000); // exactamente 3 segundos de carga
+    }
   }
 });
 
-// Redirección del botón final
+// Accede al chat solo vibra
 accessBtn.addEventListener("click", ()=>{
-  window.open("https://t.me/addlist/Pk5dafooIwE0NDAx","_blank");
-});
-
-// Redirección del anuncio
-adImg.addEventListener("click", ()=>{
-  window.open("https://giggleinsinuate.com/k6dgrqyc5g?key=a8ff3a3445842a223c56722310a7ef82","_blank");
+  accessBtn.classList.add("vibrate");
+  setTimeout(()=>accessBtn.classList.remove("vibrate"),400);
+  smallText.style.display="block";
+  smallText.textContent="Recarga la página, comparte el enlace e intenta de nuevo.";
 });
 </script>
 </body>

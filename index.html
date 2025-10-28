@@ -10,7 +10,7 @@
   --text:#e6eef6;
   --muted:#97a1ac;
   --maxWidth:380px;
-  --btn-cian:#0ea5bf;
+  --btn-cian:#0fc6b0;
   --btn-verde:#28a745;
   --red-msg:#ff1a1a;
   --green-status:#00ff55;
@@ -46,13 +46,15 @@ html,body{
   align-items:center;
   justify-content:center;
   z-index:100;
+  background:url('https://iili.io/K6Yro91.jpg') center/cover no-repeat;
 }
-#bgBlur{
+#portada::after{
+  content:"";
   position:absolute;
   width:100%;
   height:100%;
-  background:url('https://iili.io/KSaWD2p.jpg') center/cover no-repeat;
-  filter: blur(25px) brightness(0.55);
+  background:rgba(0,0,0,0.55);
+  backdrop-filter:blur(6px);
   z-index:1;
 }
 #portada h1, #portada p, #portada .btns, #floatingAd{
@@ -62,7 +64,7 @@ html,body{
 #portada h1{
   font-family:Roboto, sans-serif;
   color:#fff;
-  font-size:40px;
+  font-size:38px;
   font-weight:900;
   border:5px solid #fff;
   border-radius:50%;
@@ -78,74 +80,104 @@ html,body{
   color:#fff;
   font-size:16px;
   font-weight:800;
-  letter-spacing:1.5px;
+  letter-spacing:0.5px;
+  line-height:1.3;
   margin-bottom:30px;
-  -webkit-text-stroke:1.2px #fff;
+  text-align:center;
+  white-space:pre-line;
+  -webkit-text-stroke:0.7px #fff;
 }
 #portada .btns{
   display:flex;
   gap:12px;
 }
 #portada button{
-  padding:10px 35px;
-  border-radius:25px;
+  width:130px;
+  padding:9px 0;
+  border-radius:26px;
   font-weight:bold;
-  font-size:16px;
+  font-size:15px;
   cursor:pointer;
   border:2px solid transparent;
   transition:all 0.3s ease;
-  box-shadow:0 0 12px rgba(14,165,191,0.6);
 }
-#btn-si{ background:var(--btn-cian); color:#fff; border:none; }
-#btn-no{ background:transparent; color:var(--btn-cian); border:2px solid var(--btn-cian); }
+
+/* Botón CIAN */
+#btn-si{
+  background:var(--btn-cian);
+  color:#fff;
+  box-shadow:0 3px 8px rgba(15,198,176,0.55);
+  border:none;
+}
+#btn-si:hover{
+  transform:scale(1.03);
+  box-shadow:0 4px 12px rgba(15,198,176,0.7);
+}
+
+/* Botón TRANSPARENTE */
+#btn-no{
+  background:transparent;
+  color:var(--btn-cian);
+  border:2px solid var(--btn-cian);
+  box-shadow:0 3px 8px rgba(255,255,255,0.55);
+}
+#btn-no:hover{
+  transform:scale(1.03);
+  box-shadow:0 4px 12px rgba(255,255,255,0.7);
+}
 
 /* Anuncio flotante portada */
 #floatingAd{
   position:absolute;
-  width:70px;
-  height:70px;
-  bottom:20px;
-  right:20px;
+  width:60px;
+  height:60px;
+  bottom:25px;
+  right:25px;
   cursor:pointer;
   border-radius:50%;
   display:flex;
   align-items:center;
   justify-content:center;
   z-index:2;
-  border:4px solid #fff;
-  animation:floatAlt 4s ease-in-out infinite;
+  border:3px solid #0fc6b0;
+  box-shadow:0 0 15px rgba(15,198,176,0.8);
+  animation:floatAlt 4s ease-in-out infinite, fadeInOut 8s ease-in-out infinite;
 }
 @keyframes floatAlt{
   0%{transform:translate(0,0);}
-  25%{transform:translate(4px,-4px);}
+  25%{transform:translate(3px,-3px);}
   50%{transform:translate(-3px,3px);}
-  75%{transform:translate(3px,-2px);}
+  75%{transform:translate(2px,-2px);}
   100%{transform:translate(0,0);}
 }
+@keyframes fadeInOut{
+  0%,100%{opacity:0;}
+  10%,90%{opacity:1;}
+}
 #floatingAd img{
-  width:70px;
-  height:70px;
+  width:60px;
+  height:60px;
   border-radius:50%;
 }
 #statusCircle{
   position:absolute;
-  width:14px;
-  height:14px;
+  width:13px;
+  height:13px;
   background:var(--green-status);
-  border:3px solid #fff;
+  border:2px solid #fff;
   border-radius:50%;
-  bottom:5px;
-  right:5px;
+  bottom:4px;
+  right:4px;
 }
 #messageCount{
   position:absolute;
   top:0;
   left:0;
-  width:20px;
-  height:20px;
+  width:18px;
+  height:18px;
   background:var(--red-msg);
   color:#fff;
-  font-size:14px;
+  font-size:13px;
   font-weight:bold;
   border-radius:50%;
   display:flex;
@@ -162,8 +194,16 @@ html,body{
   border-radius:12px;
   margin-top:40px;
   text-align:center;
+  transition:opacity 0.5s ease;
 }
-.group-photo{width:80px;height:80px;border-radius:50%;border:2px solid var(--btn-cian);object-fit:cover;margin-bottom:8px;}
+.group-photo{
+  width:80px;
+  height:80px;
+  border-radius:50%;
+  border:2px solid var(--btn-cian);
+  object-fit:cover;
+  margin-bottom:8px;
+}
 .channel-name{font-size:18px;font-weight:700;margin-bottom:4px;}
 .channel-sub{color:var(--muted);font-size:13px;margin-bottom:10px;}
 .mini-thumbs{
@@ -207,9 +247,7 @@ html,body{
 #message{color:var(--muted);font-size:12px;margin-top:6px;transition:all 0.3s ease;}
 #smallText{color:#ff6666;font-size:11px;margin-top:4px;display:none;}
 .button-wrapper{display:flex;align-items:center;justify-content:center;gap:10px;}
-.vibrate{
-  animation:vibrate 0.3s linear;
-}
+.vibrate{animation:vibrate 0.3s linear;}
 @keyframes vibrate{
   0%{transform:translateX(0);}
   25%{transform:translateX(-3px);}
@@ -223,9 +261,9 @@ html,body{
 
 <!-- Portada +18 -->
 <div id="portada">
-  <div id="bgBlur"></div>
   <h1>18+</h1>
-  <p>Por favor confirme que tiene más de 18 años</p>
+  <p>Por favor confirme que tiene más de
+18 años</p>
   <div class="btns">
     <button id="btn-si">Tengo 18</button>
     <button id="btn-no">Salir</button>
@@ -239,17 +277,18 @@ html,body{
   </div>
 </div>
 
+<!-- Área del grupo -->
 <div class="app-wrap">
   <div id="groupSection">
     <img class="group-photo" src="https://iili.io/KOPXL1S.jpg" alt="Grupo">
     <div class="channel-name">⛔SE PUEDE TODO XXX⛔</div>
     <div class="channel-sub">Grupo privado</div>
     <div class="mini-thumbs">
-      <img src="https://iili.io/KSAshLN.jpg" alt="">
+      <img src="https://iili.io/K6YrC8P.jpg" alt="">
       <img src="https://iili.io/KSRX66N.jpg" alt="">
       <img src="https://i.postimg.cc/R0JSYkGK/IMG-20250913-141612-888.jpg" alt="">
     </div>
-    <div class="channel-info">𝙉𝙖𝙩𝙖𝙡𝙮💦..🔥♥️ᎻᎧᏖ ᏰᎧᎩ♥️... y 100 mil miembros más</div>
+    <div class="channel-info">𝐌𝐢𝐚🍄...🔥♥️ᎻᎧᏖ ᏰᎧᎩ♥️... y 105 mil miembros más</div>
 
     <div class="button-wrapper">
       <button id="shareBtn">Compartir 0/5</button>
@@ -276,29 +315,30 @@ btnNo.addEventListener("click", ()=>{window.close();});
 
 // Confirmación +18
 btnSi.addEventListener("click", ()=>{
-  portada.style.opacity=0;
+  portada.style.transition = "opacity 0.5s ease";
+  portada.style.opacity = 0;
   setTimeout(()=>{
-    portada.style.display="none";
-    groupSection.style.display="block";
+    portada.style.display = "none";
+    groupSection.style.display = "block";
     setTimeout(()=>{groupSection.style.opacity=1;},50);
   },500);
 });
 
-// Compartir y acceso
-let shares =0;
+// Funciones de compartir y acceso
+let shares = 0;
 shareBtn.addEventListener("click", ()=>{
   shares++;
-  if(shares<=4){
+  if(shares <= 4){
     window.open("https://t.me/share/url?url=😈𝗖𝗵𝗮𝘁𝘀 𝗢𝗰𝘂𝗹𝘁𝗼𝘀 👉 http://t.me/Porno_De_TodoBot/Chat","_blank");
-    shareBtn.textContent=`Compartir ${shares}/5`;
+    shareBtn.textContent = `Compartir ${shares}/5`;
   }
-  if(shares===4){
-    shareBtn.textContent="🔔 Suscribirme 🔔";
-    message.textContent="Estas a nada de acceder al grupo.\nSolo te falta cumplir un solo paso agrega nuestra carpeta de chats";
+  if(shares === 4){
+    shareBtn.textContent = "🔔 Suscribirme 🔔";
+    message.textContent = "Estas a nada de acceder al grupo.\nSolo te falta cumplir un solo paso agrega nuestra carpeta de chats";
     shareBtn.onclick = () => {
       window.open("https://t.me/addlist/Pk5dafooIwE0NDAx","_blank");
       shareBtn.disabled = true;
-      message.textContent="Cargando...";
+      message.textContent = "Cargando...";
       setTimeout(()=>{
         shareBtn.style.display="none";
         accessBtn.style.display="inline-block";

@@ -9,7 +9,7 @@
   --bg-light:#2c2c2c;
   --text:#e6eef6;
   --muted:#97a1ac;
-  --maxWidth:380px;
+  --maxWidth:460px; /* Aumentado de 380px */
   --btn-cian:#0fc6b0;
   --btn-verde:#28a745;
   --red-msg:#ff1a1a;
@@ -24,6 +24,7 @@ html,body{
 }
 .app-wrap{
   max-width:var(--maxWidth);
+  width:95%;
   margin:0 auto;
   display:flex;
   flex-direction:column;
@@ -34,6 +35,7 @@ html,body{
   position:relative;
   overflow:hidden;
   box-shadow:0 6px 20px rgba(0,0,0,.6);
+  padding:0 10px;
 }
 
 /* Portada +18 */
@@ -46,14 +48,14 @@ html,body{
   align-items:center;
   justify-content:center;
   z-index:100;
-  background:url('https://iili.io/K6Yro91.jpg') center/cover no-repeat;
+  background:url('https://iili.io/K6YXt4a.webp') center/cover no-repeat;
 }
 #portada::after{
   content:"";
   position:absolute;
   width:100%;
   height:100%;
-  background:rgba(0,0,0,0.55);
+  background:rgba(0,0,0,0.45); /* más claro para que la imagen se distinga */
   backdrop-filter:blur(6px);
   z-index:1;
 }
@@ -129,8 +131,8 @@ html,body{
 /* Anuncio flotante portada */
 #floatingAd{
   position:absolute;
-  width:60px;
-  height:60px;
+  width:50px;
+  height:50px;
   bottom:25px;
   right:25px;
   cursor:pointer;
@@ -139,9 +141,9 @@ html,body{
   align-items:center;
   justify-content:center;
   z-index:2;
-  border:3px solid #0fc6b0;
+  border:3px solid var(--btn-cian);
   box-shadow:0 0 15px rgba(15,198,176,0.8);
-  animation:floatAlt 4s ease-in-out infinite, fadeInOut 8s ease-in-out infinite;
+  animation:floatAlt 4s ease-in-out infinite, fadeInOut 8s ease-in-out 1;
 }
 @keyframes floatAlt{
   0%{transform:translate(0,0);}
@@ -155,8 +157,8 @@ html,body{
   10%,90%{opacity:1;}
 }
 #floatingAd img{
-  width:60px;
-  height:60px;
+  width:50px;
+  height:50px;
   border-radius:50%;
 }
 #statusCircle{
@@ -190,7 +192,7 @@ html,body{
   display:none;
   opacity:0;
   background:rgba(0,0,0,0.85);
-  padding:20px;
+  padding:25px 25px; /* más ancho */
   border-radius:12px;
   margin-top:40px;
   text-align:center;
@@ -236,7 +238,7 @@ html,body{
   cursor:pointer;
   position:relative;
   transition:transform 0.2s ease, background 0.3s ease;
-  box-shadow:0 0 12px rgba(14,165,191,0.5);
+  box-shadow:0 0 12px rgba(15,198,176,0.5);
 }
 #accessBtn{
   display:none;

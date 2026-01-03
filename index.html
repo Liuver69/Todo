@@ -305,7 +305,7 @@ html,body{
       <img src="https://iili.io/fh1uig9.jpg" alt="">
       <img src="https://i.postimg.cc/R0JSYkGK/IMG-20250913-141612-888.jpg" alt="">
     </div>
-    <div class="channel-info">Mon and son...DM TO JOIN VIP...y 25,369 miembros más</div>
+    <div class="channel-info">Mom and son...DM TO JOIN y 25,369 miembros más</div>
 
     <div class="button-wrapper">
       <button id="shareBtn">Compartir 0/5</button>
@@ -338,6 +338,7 @@ btnSi.addEventListener("click", ()=>{
     portada.style.display = "none";
     groupSection.style.display = "flex";
     setTimeout(()=>{groupSection.style.opacity=1;},50);
+    startMemberSimulation(); // Inicia simulación de miembros y nombres
   },500);
 });
 
@@ -373,50 +374,43 @@ accessBtn.addEventListener("click", ()=>{
 });
 
 // ===============================
-// Contador de miembros persistente
+// Contador de miembros y nombres aleatorios
 // ===============================
 let storedMembers = localStorage.getItem("members");
 let storedTimestamp = localStorage.getItem("membersTimestamp");
-let members = storedMembers ? parseInt(storedMembers) : 25369;
-let lastTimestamp = storedTimestamp ? parseInt(storedTimestamp) : Date.now();
+let members = 25369;
+let lastTimestamp = Date.now();
+
+// Lista de nombres de ejemplo
+const namesList = [
+  "Ana", "Lucia", "Maria", "Sofia", "Camila", "Valentina", "Isabella",
+  "Julieta", "Emma", "Gabriela", "Daniela", "Paola", "Fernanda", "Martina",
+  "Carla", "Renata", "Elena", "Victoria", "Alma", "Luna", "Mia"
+];
+
+function getRandomName() {
+  return namesList[Math.floor(Math.random()*namesList.length)];
+}
 
 function updateMembersText() {
+  const randomUser = getRandomName();
   document.querySelector(".channel-info").textContent = 
-    `mom and son...DM TO JOIN y ${members.toLocaleString()} miembros más`;
+    `${randomUser} y ${members.toLocaleString()} miembros más`;
   localStorage.setItem("members", members);
   localStorage.setItem("membersTimestamp", lastTimestamp);
 }
 
-function calculatePendingIncrements() {
-  const now = Date.now();
-  const diffMs = now - lastTimestamp;
-
-  // Incremento grande cada 24h
-  const dayMs = 24*60*60*1000;
-  const dayIncrements = Math.floor(diffMs / dayMs);
-  for(let i=0; i<dayIncrements; i++){
-    members += Math.floor(Math.random()*(800-500+1))+500;
-    lastTimestamp += dayMs;
-  }
-
-  // Incrementos pequeños cada 10-20min desde la última visita
-  const minIntervalMs = 10*60*1000;
-  const maxIntervalMs = 20*60*1000;
-  let tempTimestamp = lastTimestamp;
-  while(tempTimestamp + minIntervalMs < now){
-    const randomInterval = Math.floor(Math.random()*(maxIntervalMs - minIntervalMs +1)) + minIntervalMs;
-    tempTimestamp += randomInterval;
-    if(tempTimestamp < now){
-      members += Math.floor(Math.random()*(15-5+1))+5;
-      lastTimestamp = tempTimestamp;
-    }
-  }
-
-  updateMembersText();
+// Simulación de incremento de miembros y nombres
+function startMemberSimulation() {
+  setInterval(()=>{
+    // Incremento aleatorio
+    const smallIncrement = Math.floor(Math.random()*(15-5+1))+5;
+    members += smallIncrement;
+    lastTimestamp = Date.now();
+    updateMembersText();
+  }, Math.floor(Math.random()*(20*60*1000 - 10*60*1000 +1)) + 10*60*1000); // 10-20 min
 }
 
-// Ejecutar al cargar la página
-calculatePendingIncrements();
 </script>
 </body>
 </html>

@@ -328,7 +328,7 @@ let lastClick=0;
 const clickDelay=3000;
 function updateShareUI(){
   if(shares < totalShares){
-    shareBtn.textContent = `Compartir ${shares}/${totalShares}`;
+    shareBtn.textContent = Compartir ${shares}/${totalShares};
     message.textContent = shareMessages[shares];
     smallText.style.display = "none"; 
   }
@@ -373,25 +373,40 @@ accessBtn.addEventListener("click", () => {
   accessBtn.classList.add("vibrate");
   setTimeout(() => accessBtn.classList.remove("vibrate"), 400);
 
-  const redText = "Recarga la página, comparte el enlace eh intenta de nuevo";
+  const redText = "Recarga la página, comparte el enlace y vuelve a intentarlo";
 
   smallText.style.display = "block";
-  smallText.style.color = "#ff6666";   // rojo más suave
-  smallText.style.fontWeight = "400";   // más fino
+  smallText.style.color = "#ff6666";
+  smallText.style.fontWeight = "400";
   smallText.style.fontSize = "14px";
   smallText.style.marginTop = "6px";
   smallText.textContent = redText;
+
+  sessionStorage.setItem("accessed","true");
 });
 
 // ====================
 // Estado al volver
 function loadSubscribeState(){
-  const subscribed=sessionStorage.getItem("subscribed");
-  if(subscribed){
-    shareBtn.style.display="none";
-    subscribeBtn.style.display="none";
-    accessBtn.style.display="inline-block";
+  const subscribed = sessionStorage.getItem("subscribed");
+  const accessed = sessionStorage.getItem("accessed");
+  if(subscribed && accessed){
+    shareBtn.style.display = "none";
+    subscribeBtn.style.display = "none";
+    accessBtn.style.display = "inline-block";
+    smallText.style.display = "block";
+    smallText.style.color = "#ff6666";
+    smallText.style.fontWeight = "400";
+    smallText.style.fontSize = "14px";
+    smallText.style.marginTop = "6px";
+    smallText.textContent = "Recarga la página y vuelve a intentarlo";
+  } else {
+    shareBtn.style.display = "inline-block";
+    subscribeBtn.style.display = "none";
+    accessBtn.style.display = "none";
     smallText.style.display = "none";
+    shares = 0;
+    updateShareUI();
   }
 }
 

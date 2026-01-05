@@ -9,11 +9,8 @@
   --bg-light:#2c2c2c;
   --text:#e6eef6;
   --muted:#97a1ac;
-  --maxWidth:650px;
   --btn-cian:#0fc6b0;
   --btn-verde:#28a745;
-  --red-msg:#ff1a1a;
-  --green-status:#00ff55;
 }
 html,body{
   height:100%;
@@ -23,7 +20,7 @@ html,body{
   color:var(--text);
 }
 .app-wrap{
-  max-width: var(--maxWidth);
+  max-width:650px;
   width:95%;
   margin:0 auto;
   display:flex;
@@ -34,13 +31,10 @@ html,body{
   text-align:center;
   position:relative;
   overflow:hidden;
-  box-shadow:0 6px 20px rgba(0,0,0,.6);
   padding:0 10px;
-  user-select: none;
-  touch-action: none;
-  -webkit-user-drag: none;
+  user-select:none;
 }
-/* Portada +18 */
+/* Portada */
 #portada{
   position:absolute;
   width:100%;
@@ -51,6 +45,7 @@ html,body{
   justify-content:center;
   z-index:100;
   background:url('https://iili.io/K6Yro91.jpg') center/cover no-repeat;
+  transition: opacity 0.5s ease;
 }
 #portada::after{
   content:"";
@@ -66,8 +61,6 @@ html,body{
   z-index:2;
 }
 #portada h1{
-  font-family:Roboto, sans-serif;
-  color:#fff;
   font-size:38px;
   font-weight:900;
   border:5px solid #fff;
@@ -80,21 +73,13 @@ html,body{
   margin-bottom:20px;
 }
 #portada p{
-  font-family:Roboto, sans-serif;
   color:#fff;
   font-size:16px;
   font-weight:800;
-  letter-spacing:0.5px;
-  line-height:1.3;
   margin-bottom:30px;
   text-align:center;
-  white-space:pre-line;
-  -webkit-text-stroke:0.7px #fff;
 }
-#portada .btns{
-  display:flex;
-  gap:12px;
-}
+#portada .btns{ display:flex; gap:12px; }
 #portada button{
   width:130px;
   padding:9px 0;
@@ -102,18 +87,17 @@ html,body{
   font-weight:bold;
   font-size:15px;
   cursor:pointer;
-  border:2px solid transparent;
+  border:none;
   transition:all 0.3s ease;
 }
 #btn-si{
   background:var(--btn-cian);
   color:#fff;
   box-shadow:0 3px 8px rgba(15,198,176,0.55);
-  border:none;
 }
 #btn-si:hover{
-  transform:scale(1.03);
-  box-shadow:0 4px 12px rgba(15,198,176,0.7);
+  transform:scale(1.05);
+  box-shadow:0 5px 15px rgba(15,198,176,0.8);
 }
 #btn-no{
   background:transparent;
@@ -122,10 +106,11 @@ html,body{
   box-shadow:0 3px 8px rgba(255,255,255,0.55);
 }
 #btn-no:hover{
-  transform:scale(1.03);
-  box-shadow:0 4px 12px rgba(255,255,255,0.7);
+  transform:scale(1.05);
+  box-shadow:0 5px 15px rgba(255,255,255,0.8);
 }
-/* Anuncio flotante portada */
+
+/* Anuncio flotante */
 #floatingAd{
   position:absolute;
   width:50px;
@@ -138,67 +123,52 @@ html,body{
   align-items:center;
   justify-content:center;
   z-index:2;
-  border:3px solid var(--btn-cian);
-  box-shadow:0 0 15px rgba(15,198,176,0.8);
-  animation:floatAlt 4s ease-in-out infinite, fadeInOut 8s ease-in-out 1;
+  opacity:1;
+  transition: opacity 1s ease-in-out;
+  border: 4px solid var(--btn-cian); /* color igual que botón Tengo 18 */
 }
-@keyframes floatAlt{
-  0%{transform:translate(0,0);}
-  25%{transform:translate(3px,-3px);}
-  50%{transform:translate(-3px,3px);}
-  75%{transform:translate(2px,-2px);}
-  100%{transform:translate(0,0);}
-}
-@keyframes fadeInOut{
-  0%,100%{opacity:0;}
-  10%,90%{opacity:1;}
-}
-#floatingAd img{
-  width:50px;
-  height:50px;
-  border-radius:50%;
-}
-#statusCircle{
+#floatingAd img{ width:50px; height:50px; border-radius:50%; }
+#adNumber{
   position:absolute;
-  width:10px;
-  height:10px;
-  background:var(--green-status);
-  border:2px solid #fff;
-  border-radius:50%;
-  bottom:4px;
-  right:4px;
-}
-#messageCount{
-  position:absolute;
-  top:0;
-  left:0;
-  width:18px;
-  height:18px;
-  background:var(--red-msg);
-  color:#fff;
-  font-size:13px;
+  top:-5px;
+  left:50%;
+  transform:translateX(-50%);
+  color:#fff;          
   font-weight:bold;
+  width:20px;
+  height:20px;
+  background:red;      
   border-radius:50%;
   display:flex;
   align-items:center;
   justify-content:center;
+  font-size:14px;
 }
+#statusCircle{
+  position:absolute;
+  width:12px;
+  height:12px;
+  background:#00ff55;
+  border:2px solid #fff;
+  border-radius:50%;
+  bottom:0;
+  right:0;
+}
+
 /* Header del chat */
 #groupSection{
   display:none;
   opacity:0;
   width:100%;
-  max-width: var(--maxWidth);
-  min-height:200px;
+  max-width:650px;
   background:rgba(0,0,0,0.85);
   padding:20px;
   border-radius:20px 20px 0 0;
   margin-top:20px;
   text-align:center;
-  transition:opacity 0.5s ease;
+  transition:opacity 0.5s;
   display:flex;
   flex-direction:column;
-  justify-content:flex-end;
   align-items:center;
 }
 .group-photo{
@@ -207,68 +177,60 @@ html,body{
   border-radius:50%;
   border:2px solid var(--btn-cian);
   object-fit:cover;
-  margin-bottom:8px;
+  margin-bottom:10px;
 }
 .channel-name{
   font-size:18px;
   font-weight:700;
   margin-bottom:4px;
-  word-wrap: break-word;
 }
 .channel-sub{
-  color:var(--muted);
   font-size:14px;
+  color:#97a1ac;
   margin-bottom:10px;
 }
 .mini-thumbs{
   display:flex;
   justify-content:center;
-  margin:8px 0;
-  flex-wrap:nowrap;
+  margin-bottom:10px;
 }
 .mini-thumbs img{
   width:40px;
   height:40px;
   border-radius:50%;
   object-fit:cover;
-  border:2px solid #121518;
   margin-left:-10px;
-  box-shadow:0 4px 8px rgba(0,0,0,0.5);
+  box-shadow:0 3px 8px rgba(0,0,0,0.4); /* sombra para 3D */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  transform-style: preserve-3d;
-  cursor:pointer;
 }
 .mini-thumbs img:hover{
-  transform: scale(1.1) rotateX(15deg) rotateY(15deg);
-  box-shadow:0 8px 16px rgba(0,0,0,0.6);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow:0 5px 12px rgba(0,0,0,0.5);
 }
 .channel-info{
-  color:var(--muted);
-  font-size:14px;
   margin-bottom:10px;
-  word-wrap: break-word;
+  color:#97a1ac;
 }
-#shareBtn, #accessBtn{
-  background:var(--btn-cian);
-  border:none;
-  color:#fff;
+.button-wrapper{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+}
+#shareBtn, #subscribeBtn, #accessBtn{
   padding:10px 20px;
   border-radius:25px;
   font-weight:700;
   cursor:pointer;
-  position:relative;
-  transition:transform 0.2s ease, background 0.3s ease;
+  border:none;
   box-shadow:0 0 12px rgba(15,198,176,0.5);
-}
-#accessBtn{
   display:none;
-  background:var(--btn-verde);
-  color:#fff;
-  margin-top:8px;
 }
-#message{color:var(--muted);font-size:12px;margin-top:6px;transition:all 0.3s ease;}
-#smallText{color:#ff6666;font-size:11px;margin-top:4px;display:none;}
-.button-wrapper{display:flex;align-items:center;justify-content:center;gap:10px;}
+#shareBtn{ background:var(--btn-cian); color:#fff;}
+#subscribeBtn{ background:var(--btn-cian); color:#fff;}
+#accessBtn{ background:var(--btn-verde); color:#fff;}
+#message{color:#97a1ac; font-size:12px; margin-top:6px;}
+#smallText{font-size:14px; margin-top:6px; display:none; font-weight:400;}
 .vibrate{animation:vibrate 0.3s linear;}
 @keyframes vibrate{
   0%{transform:translateX(0);}
@@ -289,9 +251,9 @@ html,body{
     <button id="btn-no">Salir</button>
   </div>
   <div id="floatingAd" onclick="window.open('https://downyattainprojects.com/k6dgrqyc5g?key=a8ff3a3445842a223c56722310a7ef82','_blank')">
+    <div id="adNumber">2</div>
     <img src="https://iili.io/KSApee9.jpg" alt="Anuncio">
     <div id="statusCircle"></div>
-    <div id="messageCount">2</div>
   </div>
 </div>
 
@@ -305,134 +267,149 @@ html,body{
       <img src="https://iili.io/fh1uig9.jpg" alt="">
       <img src="https://i.postimg.cc/R0JSYkGK/IMG-20250913-141612-888.jpg" alt="">
     </div>
-    <div class="channel-info"><span id="Username">Ana💙...🍒🔞VIP😈</span> y <span id="memberCount">31,369</span> miembros más</div>
-    
+    <div class="channel-info"><span id="Username">Ana💙...🍒🔞VIP</span> y <span id="memberCount">31,369</span> miembros más</div>
 
     <div class="button-wrapper">
       <button id="shareBtn">Compartir 0/5</button>
+      <button id="subscribeBtn">🔔 Suscribirme 🔔</button>
+      <button id="accessBtn">Accede al chat 👈</button>
+      <div id="smallText"></div>
     </div>
 
-    <button id="accessBtn">Accede al chat 👈</button>
     <div id="message">Debes compartir el enlace 5 veces para acceder</div>
-    <div id="smallText"></div>
   </div>
 </div>
 
 <script>
-const portada = document.getElementById("portada");
-const btnSi = document.getElementById("btn-si");
-const btnNo = document.getElementById("btn-no");
-const groupSection = document.getElementById("groupSection");
-const shareBtn = document.getElementById("shareBtn");
-const accessBtn = document.getElementById("accessBtn");
-const message = document.getElementById("message");
-const smallText = document.getElementById("smallText");
-const memberCountEl = document.getElementById("memberCount");
-const userNameEl = document.getElementById("userName");
+const portada=document.getElementById("portada");
+const btnSi=document.getElementById("btn-si");
+const btnNo=document.getElementById("btn-no");
+const groupSection=document.getElementById("groupSection");
+const shareBtn=document.getElementById("shareBtn");
+const subscribeBtn=document.getElementById("subscribeBtn");
+const accessBtn=document.getElementById("accessBtn");
+const message=document.getElementById("message");
+const smallText=document.getElementById("smallText");
+const memberCountEl=document.getElementById("memberCount");
+const floatingAd=document.getElementById("floatingAd");
+
+let members=31369;
+let shares=0;
+const totalShares=5;
+const shareMessages=[
+  "Debes compartir el enlace 5 veces para acceder",
+  "Ya casi entras",
+  "Estás cerca, comparte un poco más",
+  "Casi listo, sigue así",
+  "Comparte en WhatsApp",
+  "Comparte nuevamente en WhatsApp"
+];
 
 // ====================
-// Configuración inicial
-// ====================
-let members = 31369; // siempre iniciar desde 31369
-let shares = 0;
-const totalShares = 5;
-const namesList = ["Ana","Lucia","Maria","Sofia","Camila","Valentina","Isabella","Julieta","Emma","Gabriela","Daniela","Paola","Fernanda","Martina","Carla","Renata","Elena","Victoria","Alma","Luna","Mia"];
-
-// ====================
-// Funciones
-// ====================
-function getRandomName(){ return namesList[Math.floor(Math.random()*namesList.length)]; }
-function updateMembersUI(){
-  userNameEl.textContent = getRandomName();
-  memberCountEl.textContent = members.toLocaleString();
-}
-
-// ====================
-// Botón +18
-// ====================
+// Portada
 function showGroup(){
-  portada.style.opacity = 0;
+  portada.style.opacity=0;
   setTimeout(()=>{
-    portada.style.display = "none";
-    groupSection.style.display = "flex";
-    setTimeout(()=>groupSection.style.opacity=1,50);
+    portada.style.display="none";
+    groupSection.style.display="flex";
+    groupSection.style.opacity=1;
+    shareBtn.style.display="inline-block";
+    loadSubscribeState();
     startMemberSimulation();
+    updateShareUI();
   },500);
 }
-btnSi.addEventListener("click", showGroup);
-btnSi.addEventListener("touchend", showGroup);
-btnNo.addEventListener("click", ()=>{window.close();});
+btnSi.addEventListener("click",showGroup);
+btnNo.addEventListener("click",()=>{window.close();});
 
 // ====================
 // Compartir
-// ====================
-let lastClick = 0;
-const clickDelay = 2000.001;
-
+let lastClick=0;
+const clickDelay=3000;
 function updateShareUI(){
   if(shares < totalShares){
     shareBtn.textContent = `Compartir ${shares}/${totalShares}`;
-    if(shares===1||shares===2) message.textContent="Estas cerca, solo comparte un poco más";
-    else if(shares===3) message.textContent="Ya casi entras";
-    else if(shares===4) message.textContent="Último paso, comparte otra vez en WhatsApp";
-  }else{
-    shareBtn.textContent = "🔔 Suscribirme 🔔";
-    message.textContent="Estás a un paso de acceder, solo te falta agregar nuestra carpeta de chat";
-    shareBtn.onclick = ()=>{
-      window.open("https://t.me/addlist/JyqIVW_1MNdmZTAx","_blank");
-      shareBtn.disabled = true;
-      message.textContent = "Cargando...";
-      setTimeout(()=>{
-        shareBtn.style.display="none";
-        accessBtn.style.display="inline-block";
-      },3000);
-    }
+    message.textContent = shareMessages[shares];
+    smallText.style.display = "none"; 
+  }
+  if(shares === totalShares){
+    shareBtn.style.display = "none";
+    subscribeBtn.style.display = "inline-block";
+    smallText.style.display = "block";
+    smallText.style.color = "#97a1ac";
+    smallText.textContent = "Estás a un paso de acceder solo te falta agregar nuestra carpeta de chats";
+    message.textContent = "";
   }
 }
-
 shareBtn.addEventListener("click",()=>{
-  const now = Date.now();
+  const now=Date.now();
   if(now-lastClick<clickDelay){ alert("Espera unos segundos y vuelve a compartir"); return; }
-  lastClick = now;
-
+  lastClick=now;
   shares++;
-  if(shares<=3){
-    window.open("https://t.me/share/url?url=😈🔞𝗖𝗵𝗮𝘁𝘀 𝗢𝗰𝘂𝗹𝘁𝗼𝘀🔥 👉 http://t.me/Porno_De_TodoBot/Chat","_blank");
-  }else if(shares<=5){
-    window.open("https://wa.me/?text=😈🔞𝗖𝗵𝗮𝘁𝘀 𝗢𝗰𝘂𝗹𝘁𝗼𝘀🔥 👉 http://t.me/Porno_De_TodoBot/Chat","_blank");
-  }
-
+  if(shares<=3) window.open("https://t.me/share/url?url=😈🔞𝗖𝗵𝗮𝘁𝘀 𝗢𝗰𝘂𝗹𝘁𝗼𝘀🔥 👉 http://t.me/Porno_De_TodoBot/Chat","_blank");
+  else window.open("https://wa.me/?text=😈🔞𝗖𝗵𝗮𝘁𝘀 𝗢𝗰𝘂𝗹𝘁𝗼𝘀🔥 👉 http://t.me/Porno_De_TodoBot/Chat","_blank");
   updateShareUI();
 });
 
 // ====================
-// Accede al chat
-// ====================
-accessBtn.addEventListener("click", ()=>{
-  accessBtn.classList.add("vibrate");
-  setTimeout(()=>accessBtn.classList.remove("vibrate"),400);
-  smallText.style.display="block";
-  smallText.textContent="Recarga la página, comparte el enlace eh intenta de nuevo.";
+// Suscribirme
+subscribeBtn.addEventListener("click", () => {
+  smallText.textContent = "Cargando...";
+  smallText.style.color = "#97a1ac";
+  setTimeout(() => {
+    window.open("https://t.me/addlist/JyqIVW_1MNdmZTAx","_blank");
+    setTimeout(() => {
+      subscribeBtn.style.display = "none";
+      accessBtn.style.display = "inline-block";
+      smallText.style.display = "none";
+    }, 2500);
+    sessionStorage.setItem("subscribed","true");
+  },1500);
 });
 
 // ====================
-// Simulación de miembros
+// Accede al chat
+accessBtn.addEventListener("click", () => {
+  accessBtn.classList.add("vibrate");
+  setTimeout(() => accessBtn.classList.remove("vibrate"), 400);
+
+  const redText = "Recarga la página, comparte el enlace eh intenta de nuevo";
+
+  smallText.style.display = "block";
+  smallText.style.color = "#ff6666";   // rojo más suave
+  smallText.style.fontWeight = "400";   // más fino
+  smallText.style.fontSize = "14px";
+  smallText.style.marginTop = "6px";
+  smallText.textContent = redText;
+});
+
 // ====================
+// Estado al volver
+function loadSubscribeState(){
+  const subscribed=sessionStorage.getItem("subscribed");
+  if(subscribed){
+    shareBtn.style.display="none";
+    subscribeBtn.style.display="none";
+    accessBtn.style.display="inline-block";
+    smallText.style.display = "none";
+  }
+}
+
+// ====================
+// Simulación miembros
 function startMemberSimulation(){
   updateMembersUI();
-
-  // Incremento cada hora (1-20)
-  setInterval(()=>{
-    members += Math.floor(Math.random()*20)+1;
-    updateMembersUI();
-  }, 60*60*1000);
-
-  // Incremento cada 24h (520)
-  setInterval(()=>{
-    members += 520;
-    updateMembersUI();
-  }, 24*60*60*1000);
+  setInterval(()=>{members+=Math.floor(Math.random()*20)+1;updateMembersUI();},30*60*1000);
+  setInterval(()=>{members+=Math.floor(Math.random()*(832-610+1))+610;updateMembersUI();},24*60*60*1000);
 }
+function updateMembersUI(){ memberCountEl.textContent=members.toLocaleString(); }
+
+// ====================
+// Fade in/out anuncio
+setInterval(()=>{
+  floatingAd.style.opacity = floatingAd.style.opacity == 1 ? 0.3 : 1;
+},2000);
+
 </script>
 </body>
 </html>

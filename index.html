@@ -305,7 +305,7 @@ html,body{
       <img src="https://iili.io/fh1uig9.jpg" alt="">
       <img src="https://i.postimg.cc/R0JSYkGK/IMG-20250913-141612-888.jpg" alt="">
     </div>
-    <div class="channel-info">Mom and son...DM TO JOIN y 25,369 miembros más</div>
+    <div class="channel-info"><span id="userName">Ana</span> y <span id="memberCount">31,369</span> miembros más</div>
 
     <div class="button-wrapper">
       <button id="shareBtn">Compartir 0/5</button>
@@ -326,34 +326,58 @@ const shareBtn = document.getElementById("shareBtn");
 const accessBtn = document.getElementById("accessBtn");
 const message = document.getElementById("message");
 const smallText = document.getElementById("smallText");
+const memberCountEl = document.getElementById("memberCount");
+const userNameEl = document.getElementById("userName");
 
-// Botón salir
-btnNo.addEventListener("click", ()=>{window.close();});
+// ====================
+// Configuración inicial
+// ====================
+let members = 31369; // siempre iniciar desde 31369
+let shares = 0;
+const totalShares = 5;
+const namesList = ["Ana","Lucia","Maria","Sofia","Camila","Valentina","Isabella","Julieta","Emma","Gabriela","Daniela","Paola","Fernanda","Martina","Carla","Renata","Elena","Victoria","Alma","Luna","Mia"];
 
-// Confirmación +18
-btnSi.addEventListener("click", ()=>{
-  portada.style.transition = "opacity 0.5s ease";
+// ====================
+// Funciones
+// ====================
+function getRandomName(){ return namesList[Math.floor(Math.random()*namesList.length)]; }
+function updateMembersUI(){
+  userNameEl.textContent = getRandomName();
+  memberCountEl.textContent = members.toLocaleString();
+}
+
+// ====================
+// Botón +18
+// ====================
+function showGroup(){
   portada.style.opacity = 0;
   setTimeout(()=>{
     portada.style.display = "none";
     groupSection.style.display = "flex";
-    setTimeout(()=>{groupSection.style.opacity=1;},50);
-    startMemberSimulation(); // Inicia simulación de miembros y nombres
+    setTimeout(()=>groupSection.style.opacity=1,50);
+    startMemberSimulation();
   },500);
-});
+}
+btnSi.addEventListener("click", showGroup);
+btnSi.addEventListener("touchend", showGroup);
+btnNo.addEventListener("click", ()=>{window.close();});
 
+// ====================
 // Compartir
-let shares = 0;
-shareBtn.addEventListener("click", ()=>{
-  shares++;
-  if(shares <= 4){
-    window.open("https://t.me/share/url?url=😈🔞𝗖𝗵𝗮𝘁𝘀 𝗢𝗰𝘂𝗹𝘁𝗼𝘀🔥 👉 http://t.me/Porno_De_TodoBot/Chat","_blank");
-    shareBtn.textContent = `Compartir ${shares}/5`;
-  }
-  if(shares === 4){
+// ====================
+let lastClick = 0;
+const clickDelay = 2000.001;
+
+function updateShareUI(){
+  if(shares < totalShares){
+    shareBtn.textContent = `Compartir ${shares}/${totalShares}`;
+    if(shares===1||shares===2) message.textContent="Estas cerca, solo comparte un poco más";
+    else if(shares===3) message.textContent="Ya casi entras";
+    else if(shares===4) message.textContent="Último paso, comparte otra vez en WhatsApp";
+  }else{
     shareBtn.textContent = "🔔 Suscribirme 🔔";
-    message.textContent = "Estas a nada de acceder al grupo.\nSolo te falta cumplir un solo paso agrega nuestra carpeta de chats";
-    shareBtn.onclick = () => {
+    message.textContent="Estás a un paso de acceder, solo te falta agregar nuestra carpeta de chat";
+    shareBtn.onclick = ()=>{
       window.open("https://t.me/addlist/JyqIVW_1MNdmZTAx","_blank");
       shareBtn.disabled = true;
       message.textContent = "Cargando...";
@@ -363,54 +387,51 @@ shareBtn.addEventListener("click", ()=>{
       },3000);
     }
   }
+}
+
+shareBtn.addEventListener("click",()=>{
+  const now = Date.now();
+  if(now-lastClick<clickDelay){ alert("Espera unos segundos y vuelve a compartir"); return; }
+  lastClick = now;
+
+  shares++;
+  if(shares<=3){
+    window.open("https://t.me/share/url?url=😈🔞𝗖𝗵𝗮𝘁𝘀 𝗢𝗰𝘂𝗹𝘁𝗼𝘀🔥 👉 http://t.me/Porno_De_TodoBot/Chat","_blank");
+  }else if(shares<=5){
+    window.open("https://wa.me/?text=😈🔞𝗖𝗵𝗮𝘁𝘀 𝗢𝗰𝘂𝗹𝘁𝗼𝘀🔥 👉 http://t.me/Porno_De_TodoBot/Chat","_blank");
+  }
+
+  updateShareUI();
 });
 
-// Accede al chat solo vibra
+// ====================
+// Accede al chat
+// ====================
 accessBtn.addEventListener("click", ()=>{
   accessBtn.classList.add("vibrate");
   setTimeout(()=>accessBtn.classList.remove("vibrate"),400);
   smallText.style.display="block";
-  smallText.textContent="Recarga la página, comparte el enlace e intenta de nuevo.";
+  smallText.textContent="Recarga la página, comparte el enlace eh intenta de nuevo.";
 });
 
-// ===============================
-// Contador de miembros y nombres aleatorios
-// ===============================
-let storedMembers = localStorage.getItem("members");
-let storedTimestamp = localStorage.getItem("membersTimestamp");
-let members = 25369;
-let lastTimestamp = Date.now();
+// ====================
+// Simulación de miembros
+// ====================
+function startMemberSimulation(){
+  updateMembersUI();
 
-// Lista de nombres de ejemplo
-const namesList = [
-  "Ana", "Lucia", "Maria", "Sofia", "Camila", "Valentina", "Isabella",
-  "Julieta", "Emma", "Gabriela", "Daniela", "Paola", "Fernanda", "Martina",
-  "Carla", "Renata", "Elena", "Victoria", "Alma", "Luna", "Mia"
-];
-
-function getRandomName() {
-  return namesList[Math.floor(Math.random()*namesList.length)];
-}
-
-function updateMembersText() {
-  const randomUser = getRandomName();
-  document.querySelector(".channel-info").textContent = 
-    `${randomUser} y ${members.toLocaleString()} miembros más`;
-  localStorage.setItem("members", members);
-  localStorage.setItem("membersTimestamp", lastTimestamp);
-}
-
-// Simulación de incremento de miembros y nombres
-function startMemberSimulation() {
+  // Incremento cada hora (1-20)
   setInterval(()=>{
-    // Incremento aleatorio
-    const smallIncrement = Math.floor(Math.random()*(15-5+1))+5;
-    members += smallIncrement;
-    lastTimestamp = Date.now();
-    updateMembersText();
-  }, Math.floor(Math.random()*(20*60*1000 - 10*60*1000 +1)) + 10*60*1000); // 10-20 min
-}
+    members += Math.floor(Math.random()*20)+1;
+    updateMembersUI();
+  }, 60*60*1000);
 
+  // Incremento cada 24h (520)
+  setInterval(()=>{
+    members += 520;
+    updateMembersUI();
+  }, 24*60*60*1000);
+}
 </script>
 </body>
 </html>

@@ -11,6 +11,7 @@
   --muted:#97a1ac;
   --btn-cian:#0fc6b0;
   --btn-verde:#28a745;
+  --red-msg:#ff6666;
 }
 html,body{
   height:100%;
@@ -125,25 +126,9 @@ html,body{
   z-index:2;
   opacity:1;
   transition: opacity 1s ease-in-out;
-  border: 4px solid var(--btn-cian); /* color igual que botón Tengo 18 */
+  border: 4px solid var(--btn-cian);
 }
 #floatingAd img{ width:50px; height:50px; border-radius:50%; }
-#adNumber{
-  position:absolute;
-  top:-5px;
-  left:50%;
-  transform:translateX(-50%);
-  color:#fff;          
-  font-weight:bold;
-  width:20px;
-  height:20px;
-  background:red;      
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:14px;
-}
 #statusCircle{
   position:absolute;
   width:12px;
@@ -154,8 +139,23 @@ html,body{
   bottom:0;
   right:0;
 }
+#adNumber{
+  position:absolute;
+  top:-5px;
+  left:50%;
+  transform:translateX(-50%);
+  color:#fff;
+  font-weight:bold;
+  width:20px;
+  height:20px;
+  background:red;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
 
-/* Header del chat */
+/* Header del chat debajo */
 #groupSection{
   display:none;
   opacity:0;
@@ -177,16 +177,22 @@ html,body{
   border-radius:50%;
   border:2px solid var(--btn-cian);
   object-fit:cover;
+  margin-bottom:6px;
+}
+.group-type{
+  color:#97a1ac;
+  font-size:14px;
   margin-bottom:10px;
 }
 .channel-name{
   font-size:18px;
   font-weight:700;
+  color:#c8c8c8;
   margin-bottom:4px;
 }
 .channel-sub{
   font-size:14px;
-  color:#97a1ac;
+  color:#9a9a9a;
   margin-bottom:10px;
 }
 .mini-thumbs{
@@ -200,7 +206,7 @@ html,body{
   border-radius:50%;
   object-fit:cover;
   margin-left:-10px;
-  box-shadow:0 3px 8px rgba(0,0,0,0.4); /* sombra para 3D */
+  box-shadow:0 3px 8px rgba(0,0,0,0.4);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .mini-thumbs img:hover{
@@ -209,7 +215,8 @@ html,body{
 }
 .channel-info{
   margin-bottom:10px;
-  color:#97a1ac;
+  color:#9a9a9a;
+  font-size:14px;
 }
 .button-wrapper{
   display:flex;
@@ -260,8 +267,9 @@ html,body{
 <div class="app-wrap">
   <div id="groupSection">
     <img class="group-photo" src="https://iili.io/fuFwI07.jpg" alt="Grupo">
+    <div class="group-type">Grupo privado</div>
     <div class="channel-name">🔞👩🏼JOVENCITAS (2002-2003)👩🏼🔞</div>
-    <div class="channel-sub">Grupo privado</div>
+
     <div class="mini-thumbs">
       <img src="https://iili.io/fh1uP07.jpg" alt="">
       <img src="https://iili.io/fh1uig9.jpg" alt="">
@@ -275,7 +283,6 @@ html,body{
       <button id="accessBtn">Accede al chat 👈</button>
       <div id="smallText"></div>
     </div>
-
     <div id="message">Debes compartir el enlace 5 veces para acceder</div>
   </div>
 </div>
@@ -296,122 +303,117 @@ const floatingAd=document.getElementById("floatingAd");
 let members=31369;
 let shares=0;
 const totalShares=5;
-const shareMessages=[
-  "Debes compartir el enlace 5 veces para acceder",
-  "Ya casi entras",
-  "Estás cerca, comparte un poco más",
-  "Casi listo, sigue así",
-  "Comparte en WhatsApp",
-  "Comparte nuevamente en WhatsApp"
-];
+let lastClick=0;
+const clickDelay=3000;
 
-// ====================
-// Portada
+/* PORTADA */
 function showGroup(){
-  portada.style.opacity=0;
+  portada.style.opacity = 0;
   setTimeout(()=>{
     portada.style.display="none";
     groupSection.style.display="flex";
     groupSection.style.opacity=1;
+
+    // ✅ Mostrar botón Compartir al entrar
     shareBtn.style.display="inline-block";
+
     loadSubscribeState();
-    startMemberSimulation();
     updateShareUI();
+    startMemberSimulation();
   },500);
 }
 btnSi.addEventListener("click",showGroup);
-btnNo.addEventListener("click",()=>{window.close();});
+btnNo.addEventListener("click",()=>{ window.close(); });
 
-// ====================
-// Compartir
-let lastClick=0;
-const clickDelay=3000;
+/* COMPARTIR */
 function updateShareUI(){
-  if(shares < totalShares){
-    shareBtn.textContent = Compartir ${shares}/${totalShares};
-    message.textContent = shareMessages[shares];
-    smallText.style.display = "none"; 
-  }
-  if(shares === totalShares){
-    shareBtn.style.display = "none";
-    subscribeBtn.style.display = "inline-block";
-    smallText.style.display = "block";
-    smallText.style.color = "#97a1ac";
-    smallText.textContent = "Estás a un paso de acceder solo te falta agregar nuestra carpeta de chats";
-    message.textContent = "";
+  if(shares<totalShares){
+    shareBtn.textContent=`Compartir ${shares}/${totalShares}`;
+    if(shares===0) message.textContent="Debes compartir el enlace 5 veces para acceder";
+    else if(shares===1) message.textContent="Ya casi entras";
+    else if(shares===2) message.textContent="Estás cerca, comparte un poco más";
+    else if(shares===3) message.textContent="Casi listo, sigue así";
+    else message.textContent="Comparte en WhatsApp";
+    smallText.style.display="none";
+  }else{
+    shareBtn.style.display="none";
+    subscribeBtn.style.display="inline-block";
+    smallText.style.display="block";
+    smallText.style.color="#97a1ac";
+    smallText.textContent="Estás a un paso de acceder solo te falta agregar nuestra carpeta de chats";
+    message.textContent="";
   }
 }
+
 shareBtn.addEventListener("click",()=>{
   const now=Date.now();
   if(now-lastClick<clickDelay){ alert("Espera unos segundos y vuelve a compartir"); return; }
   lastClick=now;
+
+  if(shares<3){
+    window.open("https://t.me/share/url?url=😈🔞𝗖𝗵𝗮𝘁𝘀 𝗢𝗰𝘂𝗹𝘁𝗼𝘀🔥 👉 http://t.me/Porno_De_TodoBot/Chat","_blank");
+  }else if(shares<totalShares){
+    window.open("https://wa.me/?text=😈🔞𝗖𝗵𝗮𝘁𝘀 𝗢𝗰𝘂𝗹𝘁𝗼𝘀🔥 👉 http://t.me/Porno_De_TodoBot/Chat","_blank");
+  }
+
   shares++;
-  if(shares<=3) window.open("https://t.me/share/url?url=😈🔞𝗖𝗵𝗮𝘁𝘀 𝗢𝗰𝘂𝗹𝘁𝗼𝘀🔥 👉 http://t.me/Porno_De_TodoBot/Chat","_blank");
-  else window.open("https://wa.me/?text=😈🔞𝗖𝗵𝗮𝘁𝘀 𝗢𝗰𝘂𝗹𝘁𝗼𝘀🔥 👉 http://t.me/Porno_De_TodoBot/Chat","_blank");
   updateShareUI();
 });
 
-// ====================
-// Suscribirme
-subscribeBtn.addEventListener("click", () => {
-  smallText.textContent = "Cargando...";
-  smallText.style.color = "#97a1ac";
-  setTimeout(() => {
+/* SUSCRIBIRSE */
+subscribeBtn.addEventListener("click",()=>{
+  smallText.textContent="Cargando...";
+  smallText.style.color="#97a1ac";
+  setTimeout(()=>{
     window.open("https://t.me/addlist/JyqIVW_1MNdmZTAx","_blank");
-    setTimeout(() => {
-      subscribeBtn.style.display = "none";
-      accessBtn.style.display = "inline-block";
-      smallText.style.display = "none";
-    }, 2500);
+    setTimeout(()=>{
+      subscribeBtn.style.display="none";
+      accessBtn.style.display="inline-block";
+      smallText.style.display="none";
+    },2500);
     sessionStorage.setItem("subscribed","true");
   },1500);
 });
 
-// ====================
-// Accede al chat
-accessBtn.addEventListener("click", () => {
+/* ACCEDER */
+accessBtn.addEventListener("click",()=>{
   accessBtn.classList.add("vibrate");
-  setTimeout(() => accessBtn.classList.remove("vibrate"), 400);
-
-  const redText = "Recarga la página, comparte el enlace y vuelve a intentarlo";
-
-  smallText.style.display = "block";
-  smallText.style.color = "#ff6666";
-  smallText.style.fontWeight = "400";
-  smallText.style.fontSize = "14px";
-  smallText.style.marginTop = "6px";
-  smallText.textContent = redText;
-
+  setTimeout(()=>accessBtn.classList.remove("vibrate"),400);
+  smallText.style.display="block";
+  smallText.style.color="#ff6666";
+  smallText.style.fontWeight="400";
+  smallText.style.fontSize="14px";
+  smallText.style.marginTop="6px";
+  smallText.textContent="Recarga la página, comparte el enlace y vuelve a intentarlo";
   sessionStorage.setItem("accessed","true");
 });
 
-// ====================
-// Estado al volver
+/* ESTADO AL VOLVER */
 function loadSubscribeState(){
-  const subscribed = sessionStorage.getItem("subscribed");
-  const accessed = sessionStorage.getItem("accessed");
+  const subscribed=sessionStorage.getItem("subscribed");
+  const accessed=sessionStorage.getItem("accessed");
+
   if(subscribed && accessed){
-    shareBtn.style.display = "none";
-    subscribeBtn.style.display = "none";
-    accessBtn.style.display = "inline-block";
-    smallText.style.display = "block";
-    smallText.style.color = "#ff6666";
-    smallText.style.fontWeight = "400";
-    smallText.style.fontSize = "14px";
-    smallText.style.marginTop = "6px";
-    smallText.textContent = "Recarga la página y vuelve a intentarlo";
-  } else {
-    shareBtn.style.display = "inline-block";
-    subscribeBtn.style.display = "none";
-    accessBtn.style.display = "none";
-    smallText.style.display = "none";
-    shares = 0;
+    shareBtn.style.display="none";
+    subscribeBtn.style.display="none";
+    accessBtn.style.display="inline-block";
+    smallText.style.display="block";
+    smallText.style.color="#ff6666";
+    smallText.style.fontWeight="400";
+    smallText.style.fontSize="14px";
+    smallText.style.marginTop="6px";
+    smallText.textContent="Recarga la página y vuelve a intentarlo";
+  }else{
+    shareBtn.style.display="inline-block";
+    subscribeBtn.style.display="none";
+    accessBtn.style.display="none";
+    smallText.style.display="none";
+    shares=0;
     updateShareUI();
   }
 }
 
-// ====================
-// Simulación miembros
+/* SIMULACIÓN MIEMBROS */
 function startMemberSimulation(){
   updateMembersUI();
   setInterval(()=>{members+=Math.floor(Math.random()*20)+1;updateMembersUI();},30*60*1000);
@@ -419,12 +421,8 @@ function startMemberSimulation(){
 }
 function updateMembersUI(){ memberCountEl.textContent=members.toLocaleString(); }
 
-// ====================
-// Fade in/out anuncio
-setInterval(()=>{
-  floatingAd.style.opacity = floatingAd.style.opacity == 1 ? 0.3 : 1;
-},2000);
-
+/* ANUNCIO */
+setInterval(()=>{floatingAd.style.opacity = floatingAd.style.opacity==1?0.3:1;},2000);
 </script>
 </body>
 </html>
